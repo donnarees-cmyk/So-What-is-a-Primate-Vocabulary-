@@ -1,0 +1,359 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Primate Vocabulary · Explorer's Word Kit</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Kalam:wght@400;700&family=Lexend:wght@400;500;600;700&display=swap" rel="stylesheet">
+<style>
+:root{
+  --paper:#f6eedb; --paper2:#efe3c6; --ink:#2f2a22; --muted:#6b5f4b;
+  --green:#3f6b3a; --green-d:#2c4d29; --kraft:#b98a55; --kraft-d:#8a6236;
+  --blue:#2f6db5; --card:#fffaf0; --good:#2e8b3e; --goodbg:#e3f4e1; --bad:#c2412d; --badbg:#fbe4df; --hl:#ffe36b;
+}
+*{box-sizing:border-box}
+html,body{margin:0}
+body{
+  background:var(--paper);
+  background-image:repeating-linear-gradient(0deg,transparent 0 33px,rgba(120,100,60,.08) 33px 34px);
+  color:var(--ink);font-family:'Lexend',system-ui,sans-serif;font-size:18px;line-height:1.6;
+  -webkit-tap-highlight-color:transparent;padding-bottom:40px;
+}
+header{background:linear-gradient(135deg,var(--green),var(--green-d));color:#fff;text-align:center;padding:16px 16px 22px;border-bottom:6px dashed var(--kraft)}
+.logo{max-width:200px;width:50%;display:block;margin:0 auto 8px;background:#fff;border-radius:14px;padding:6px}
+.tag{display:inline-block;font-family:'Kalam',cursive;background:var(--kraft);border-radius:999px;padding:2px 14px;font-size:15px}
+h1{font-family:'Kalam',cursive;font-size:2.2rem;line-height:1.1;margin:8px 0 2px}
+.sub{opacity:.9;font-size:.95rem}
+.wrap{max-width:760px;margin:0 auto;padding:0 16px}
+.std{margin:16px 0 0;background:var(--card);border:2px dashed var(--kraft);border-radius:12px;padding:8px 14px;font-size:.8rem;color:var(--muted);line-height:1.45}
+.std b{color:var(--green-d)}
+.steps{display:flex;gap:4px;margin:16px 0 6px}
+.steps i{flex:1;height:10px;border-radius:99px;background:var(--paper2)}
+.steps i.done{background:#7fb35a}.steps i.now{background:var(--green)}
+.where{font-size:.85rem;color:var(--muted);text-align:center;margin-bottom:8px}
+.card{background:var(--card);border:3px solid var(--kraft);border-radius:22px;box-shadow:5px 5px 0 var(--kraft);padding:20px 20px 22px;margin:8px 0 18px}
+.card h2{font-family:'Kalam',cursive;color:var(--green-d);font-size:1.8rem;margin:0 0 6px;line-height:1.2}
+.word{display:flex;align-items:center;gap:12px;flex-wrap:wrap}
+.word .em{font-size:3rem;line-height:1}
+.word .w{font-family:'Kalam',cursive;font-size:2.8rem;color:var(--blue);font-weight:700;line-height:1}
+.pr{color:var(--muted);font-size:1rem}
+.def{font-size:1.25rem;font-weight:600;margin:10px 0 14px}
+.box{border-radius:14px;padding:12px 14px;margin:10px 0;line-height:1.5}
+.box .lab{font-family:'Kalam',cursive;font-size:1.1rem;font-weight:700;display:block;margin-bottom:2px}
+.art{background:#fff6cf;border-left:6px solid #e6b800}
+.art mark{background:var(--hl);padding:0 3px;border-radius:4px;font-weight:600}
+.clue{text-decoration:underline wavy #c2412d 2px;text-underline-offset:4px}
+.kid{background:#e8f1fb;border-left:6px solid var(--blue)}
+.root{background:#eef5e6;border-left:6px solid var(--green)}
+.tip{background:#fbeee0;border-left:6px solid var(--kraft)}
+.btn{font-family:'Lexend',sans-serif;border:none;border-radius:14px;min-height:52px;padding:0 18px;font-size:1rem;font-weight:600;cursor:pointer;background:var(--paper2);color:var(--ink);display:inline-flex;align-items:center;justify-content:center;gap:6px}
+.btn:active{transform:scale(.97)}
+.btn.go{background:var(--green);color:#fff}
+.btn:disabled{opacity:.4;cursor:not-allowed}
+.btn.hear{background:#e8f1fb;color:var(--blue);min-height:44px;padding:0 14px;font-size:.95rem}
+.nav{display:flex;justify-content:space-between;gap:10px;margin-top:6px}
+.q{margin-top:18px;padding-top:14px;border-top:2px dashed var(--kraft)}
+.q .qlab{font-family:'Kalam',cursive;color:var(--kraft-d);font-size:1.15rem;font-weight:700}
+.qtext{font-weight:600;margin:4px 0 10px;font-size:1.1rem}
+.opts{display:grid;gap:10px}
+.opt{font-family:'Lexend',sans-serif;text-align:left;font-size:1.02rem;background:#fff;border:3px solid var(--paper2);border-radius:14px;padding:12px 14px;cursor:pointer;color:var(--ink);display:flex;gap:10px;align-items:flex-start;min-height:52px}
+.opt .l{flex:none;width:30px;height:30px;border-radius:50%;background:var(--paper2);display:flex;align-items:center;justify-content:center;font-weight:700;font-size:.9rem}
+.opt:hover:not(:disabled){border-color:var(--kraft)}
+.opt:disabled{cursor:default}
+.opt.right{border-color:var(--good);background:var(--goodbg)}
+.opt.right .l{background:var(--good);color:#fff}
+.opt.wrong{border-color:var(--bad);background:var(--badbg)}
+.opt.wrong .l{background:var(--bad);color:#fff}
+.fb{display:none;margin-top:12px;border-radius:14px;padding:12px 14px;line-height:1.5}
+.fb.show{display:block}
+.fb.good{background:var(--goodbg);border:2px solid var(--good)}
+.fb.bad{background:var(--badbg);border:2px solid var(--bad)}
+.tiles{display:grid;grid-template-columns:repeat(auto-fill,minmax(150px,1fr));gap:10px;margin:14px 0}
+.tile{background:#fff;border:2px solid var(--kraft);border-radius:14px;padding:12px;text-align:center}
+.tile .e{font-size:2rem}.tile b{display:block;font-family:'Kalam',cursive;color:var(--blue);font-size:1.4rem}
+.stars{font-size:2.6rem;text-align:center;letter-spacing:4px;margin:6px 0}
+.score{text-align:center;font-size:1.4rem;font-weight:700}
+.miss{background:#fff;border:2px solid var(--paper2);border-radius:12px;padding:10px 12px;margin:8px 0;font-size:.95rem;line-height:1.45}
+.miss b{color:var(--good)}
+#confetti{position:fixed;inset:0;pointer-events:none;z-index:50}
+footer{text-align:center;color:var(--muted);font-size:.85rem;margin-top:10px}
+@media (max-width:520px){body{font-size:17px}.word .w{font-size:2.3rem}h1{font-size:1.9rem}.card{padding:16px}}
+</style>
+</head>
+<body>
+<header>
+  <img class="logo" src="logo.png" alt="The Literacy Locksmith" onerror="this.style.display='none'">
+  <span class="tag">🔑 Vocabulary · Unit 2</span>
+  <h1>Explorer's Word Kit</h1>
+  <div class="sub">Words from “So What Is a Primate?”</div>
+</header>
+
+<div class="wrap">
+  <div class="std">
+    <b>ELA.6.V.1.1</b> Integrate academic vocabulary appropriate to grade level in speaking and writing.<br>
+    <b>ELA.6.V.1.3</b> Apply knowledge of context clues, figurative language, word relationships, reference materials, and/or background knowledge to determine the connotative and denotative meanings of words and phrases, appropriate to grade level.
+  </div>
+  <div class="steps" id="steps"></div>
+  <div class="where" id="where"></div>
+  <div id="stage"></div>
+  <footer>Vocabulary lesson by Mrs. Rees</footer>
+</div>
+<canvas id="confetti"></canvas>
+
+<script>
+/* ================= CONTENT ================= */
+const WORDS = [
+ {w:"agile", em:"🤸", pr:"(AJ uhl)", pos:"adjective",
+  def:"able to move quickly and easily",
+  art:'Primates have <mark>agile</mark> arms and legs.', para:5,
+  artSay:"Primates have agile arms and legs.",
+  kid:"A soccer goalie who dives, twists, and pops right back up is <b>agile</b>. So is a squirrel racing along a skinny fence.",
+  kidSay:"A soccer goalie who dives, twists, and pops right back up is agile. So is a squirrel racing along a skinny fence.",
+  root:"From Latin <b>agere</b> = “to do, to move.” Word family: <i>agility, act, agent</i>.",
+  rootSay:"Agile comes from the Latin word agere, which means to do, or to move. Word family: agility, act, agent.",
+  q:{t:"Which animal is the MOST agile?", o:["A sloth sleeping in a tree all afternoon","A cat leaping from a fence to a tree branch","A turtle slowly crossing the road","A cow resting in a field"], a:1,
+     ex:"Agile means able to move quickly and easily. The cat leaping from a fence to a branch moves fast and with control."}},
+ {w:"prehensile", em:"🐒", pr:"(pree HEHN suhl)", pos:"adjective",
+  def:"able to grab or hold something by wrapping around it",
+  art:'Many New World monkeys have <mark>prehensile</mark> tails <span class="clue">that wrap around branches and act as an extra hand or foot</span>.', para:5,
+  artSay:"Many New World monkeys have prehensile tails that wrap around branches and act as an extra hand or foot.",
+  kid:"An elephant’s trunk is <b>prehensile</b>. It can curl around a peanut and lift it to the elephant’s mouth.",
+  kidSay:"An elephant's trunk is prehensile. It can curl around a peanut and lift it to the elephant's mouth.",
+  root:"From Latin <b>prehendere</b> = “to grasp.” Word family: <i>comprehend</i> (to “grasp” an idea), <i>apprehend</i>.",
+  rootSay:"Prehensile comes from the Latin word prehendere, which means to grasp. Word family: comprehend, which means to grasp an idea, and apprehend.",
+  tip:"🔍 <b>Context clue!</b> The author tells you what prehensile means right in the sentence: the tails “wrap around branches and act as an extra hand or foot.”",
+  tipSay:"Context clue! The author tells you what prehensile means right in the sentence: the tails wrap around branches and act as an extra hand or foot.",
+  q:{t:"Which body part is prehensile?", o:["A turtle’s hard shell","A rabbit’s long ear","An elephant’s trunk wrapping around food","A fish’s shiny scales"], a:2,
+     ex:"Prehensile means able to grab or hold by wrapping around something. An elephant’s trunk wraps around food to pick it up."}},
+ {w:"sensitive", em:"🖐️", pr:"(SEHN suh tihv)", pos:"adjective",
+  def:"able to easily detect stimulation",
+  art:'Primate fingers are flexible with <mark>sensitive</mark> ends, giving them a keen sense of touch.', para:6,
+  artSay:"Primate fingers are flexible with sensitive ends, giving them a keen sense of touch.",
+  kid:"<b>Stimulation</b> is anything your senses notice, like a touch, a sound, or a light. Something <b>sensitive</b> notices even tiny things. Your fingertips are sensitive enough to feel a single grain of sand!",
+  kidSay:"Stimulation is anything your senses notice, like a touch, a sound, or a light. Something sensitive notices even tiny things. Your fingertips are sensitive enough to feel a single grain of sand!",
+  root:"From Latin <b>sentire</b> = “to feel.” Word family: <i>sense, sensation, sensory</i>.",
+  rootSay:"Sensitive comes from the Latin word sentire, which means to feel. Word family: sense, sensation, sensory.",
+  q:{t:"A dog’s nose is so sensitive that it can…", o:["smell a treat hidden inside a zipped backpack","sleep through a loud thunderstorm","run faster than a bicycle","bark at the mail carrier every day"], a:0,
+     ex:"Sensitive means able to easily detect things. A sensitive nose can detect a smell even when the treat is hidden."}},
+ {w:"keen", em:"🦅", pr:"(keen)", pos:"adjective",
+  def:"extremely clear or sharp in perception",
+  art:'Primate fingers are flexible with sensitive ends, giving them a <mark>keen</mark> sense of touch.', para:6,
+  artSay:"Primate fingers are flexible with sensitive ends, giving them a keen sense of touch.",
+  kid:"<b>Perception</b> means how well you notice things with your senses. An eagle has <b>keen</b> eyesight. It can spot a mouse from high up in the sky!",
+  kidSay:"Perception means how well you notice things with your senses. An eagle has keen eyesight. It can spot a mouse from high up in the sky!",
+  root:"Look for it again! The author also uses <i>keen</i> in paragraph 9 (“senses of hearing and smell are keen”) and paragraph 11 (“keen color vision”).",
+  rootSay:"Look for it again! The author also uses keen in paragraph 9, senses of hearing and smell are keen, and paragraph 11, keen color vision.",
+  tip:"⚠️ <b>Multiple meanings!</b> <i>Keen</i> can also mean <b>eager or excited</b>: “Maya was keen to try out for the team.” Use the context to decide which meaning fits.",
+  tipSay:"Multiple meanings! Keen can also mean eager or excited: Maya was keen to try out for the team. Use the context to decide which meaning fits.",
+  q:{t:"Which example shows KEEN hearing?", o:["A boy who asks for the TV to be turned up","An owl hearing a mouse move under the snow","A girl who wears earmuffs in the cold","A dog that is afraid of fireworks"], a:1,
+     ex:"Keen means extremely sharp. An owl that can hear a tiny mouse moving under snow has very sharp hearing."}},
+ {w:"opposable", em:"👍", pr:"(uh POH zuh buhl)", pos:"adjective",
+  def:"able to be placed against one or more of the other fingers on the same hand or foot",
+  art:'This <mark>opposable</mark> thumb makes grasping small objects easy and paves the way for using and making tools.', para:6,
+  artSay:"This opposable thumb makes grasping small objects easy and paves the way for using and making tools.",
+  kid:"Try it! Touch your thumb to the tip of each finger. That’s your <b>opposable</b> thumb at work. It lets you hold a pencil, zip a zipper, and tap your iPad.",
+  kidSay:"Try it! Touch your thumb to the tip of each finger. That's your opposable thumb at work. It lets you hold a pencil, zip a zipper, and tap your iPad.",
+  root:"From Latin <b>ob</b> = “against” + <b>ponere</b> = “to place.” Word family: <i>oppose, opposite</i>.",
+  rootSay:"Opposable comes from two Latin parts. Ob means against, and ponere means to place. Word family: oppose, opposite.",
+  q:{t:"How does an opposable thumb help a chimpanzee use a stick as a tool?", o:["It helps the chimp run faster on the ground","It keeps the chimp warm at night","It lets the chimp grip the stick between its thumb and fingers","It helps the chimp see colors"], a:2,
+     ex:"An opposable thumb can press against the other fingers, so the chimp can grip and control the stick."}},
+ {w:"intelligent", em:"🧠", pr:"(ihn TEL uh juhnt)", pos:"adjective",
+  def:"able to learn and understand things",
+  art:'Anthropoids are <mark>intelligent</mark> and <span class="clue">quick to learn</span>.', para:11,
+  artSay:"Anthropoids are intelligent and quick to learn.",
+  kid:"A crow that figures out how to drop nuts on the road so cars will crack them open is <b>intelligent</b>. It learned and understood how to solve a problem.",
+  kidSay:"A crow that figures out how to drop nuts on the road so cars will crack them open is intelligent. It learned and understood how to solve a problem.",
+  root:"From Latin <b>intellegere</b> = “to understand.” Word family: <i>intelligence, intellect</i>.",
+  rootSay:"Intelligent comes from the Latin word intellegere, which means to understand. Word family: intelligence, intellect.",
+  tip:"🔍 <b>Context clue!</b> The words “quick to learn” right after <i>intelligent</i> help explain its meaning.",
+  tipSay:"Context clue! The words quick to learn, right after intelligent, help explain its meaning.",
+  q:{t:"Which action shows that a chimpanzee is intelligent?", o:["It has dark brown fur","It weighs more than 100 pounds","It sleeps in a nest of leaves","It learns to use a twig to fish termites out of a mound"], a:3,
+     ex:"Intelligent means able to learn and understand. Figuring out how to use a twig as a tool shows learning and problem solving."}}
+];
+
+const PRACTICE = [
+ {t:"The gymnast was so ________ that she flipped across the balance beam without a single wobble.", o:["prehensile","agile","opposable","intelligent"], a:1,
+  ex:"Agile means able to move quickly and easily, just like a gymnast flipping without a wobble."},
+ {t:"A spider monkey can hang from a branch by its ________ tail while it eats fruit with both hands.", o:["keen","sensitive","prehensile","agile"], a:2,
+  ex:"Prehensile means able to grab or hold by wrapping around something. The tail wraps around the branch to hold on."},
+ {t:"The detective had such a ________ eye that she noticed a tiny scratch on the door handle.", o:["keen","prehensile","opposable","agile"], a:0,
+  ex:"Keen means extremely sharp in perception. Noticing a tiny scratch takes very sharp eyesight."},
+ {t:"Which word is a SYNONYM (means the same) for agile?", o:["clumsy","sleepy","nimble","heavy"], a:2,
+  ex:"Nimble means quick and light in movement, which is the same idea as agile. Clumsy is the opposite."},
+ {t:"In “eagles have keen eyesight,” which word is an ANTONYM (means the opposite) of keen?", o:["sharp","blurry","clear","strong"], a:1,
+  ex:"Keen eyesight is sharp and clear. Blurry is the opposite."},
+ {t:"Read paragraph 5: “Many New World monkeys have prehensile tails that wrap around branches and act as an extra hand or foot.” Which words are the BEST context clue for prehensile?", o:["“New World”","“Many monkeys”","“wrap around branches”","“extra”"], a:2,
+  ex:"“Wrap around branches” tells you what a prehensile tail can do: grab and hold by wrapping."},
+ {t:"Read paragraph 11: “Anthropoids are intelligent and quick to learn.” Which words help you understand intelligent?", o:["“quick to learn”","“Anthropoids”","“are”","“and”"], a:0,
+  ex:"“Quick to learn” explains what it means to be intelligent: able to learn and understand things."},
+ {t:"Sensitive comes from the Latin root sentire, meaning “to feel.” Which word belongs to the same word family?", o:["settle","signal","sensation","selfish"], a:2,
+  ex:"A sensation is a feeling, like the sensation of cold water. It shares the root sent/sens, “to feel.”"},
+ {t:"Which sentence uses opposable correctly?", o:["The opposable weather kept us inside all day.","She was opposable at the race and won first place.","The soup was too opposable to eat.","Because of my opposable thumb, I can hold a pencil."], a:3,
+  ex:"Opposable describes a thumb or toe that can press against the other fingers, which is why you can hold a pencil."},
+ {t:"Which sentence uses sensitive correctly?", o:["A bat’s sensitive ears can hear the tiny buzz of an insect.","The sensitive bus arrived ten minutes late.","My brother ate a sensitive sandwich for lunch.","The sensitive mountain was covered in snow."], a:0,
+  ex:"Sensitive means able to easily detect things. A bat’s ears detect even tiny sounds."},
+ {t:"Read this sentence: “Jamal was keen to join the science club and signed up on the first day.” What does keen mean HERE?", o:["sharp-eyed","eager or excited","able to grab things","quick-moving"], a:1,
+  ex:"Keen has more than one meaning. The clue “signed up on the first day” shows Jamal was eager and excited."},
+ {t:"Why does the author describe primates’ fingers as sensitive and their thumbs as opposable in paragraph 6?", o:["To show that primates are dangerous animals","To explain how primates can grasp small objects and use tools","To compare primates to fish and lizards","To explain why some primates live alone"], a:1,
+  ex:"Sensitive fingertips and opposable thumbs help primates feel and grip objects, which paves the way for using and making tools."}
+];
+
+/* ================= STEPS ================= */
+const STEPS = [{k:'intro'}];
+WORDS.forEach((w,i)=>STEPS.push({k:'learn',i}));
+STEPS.push({k:'pintro'});
+PRACTICE.forEach((q,i)=>STEPS.push({k:'prac',i}));
+STEPS.push({k:'results'});
+
+/* ================= SAVE (device storage) ================= */
+const KEY='rees-primate-vocab-v1';
+let S={step:0, learn:{}, prac:{}, celebrated:false};
+try{ const d=JSON.parse(localStorage.getItem(KEY)); if(d && typeof d.step==='number') S=Object.assign(S,d); }catch(e){}
+function save(){ try{ localStorage.setItem(KEY, JSON.stringify(S)); }catch(e){} }
+
+/* ================= SPEECH ================= */
+const synth=window.speechSynthesis; let voice=null;
+function pickVoice(){
+  if(!synth) return; const vs=synth.getVoices(); if(!vs.length) return;
+  const pref=["Google US English","Samantha","Ava","Allison","Susan","Zoe","Nicky","Microsoft Aria","Microsoft Jenny"];
+  for(const n of pref){ const v=vs.find(v=>v.name.indexOf(n)===0 && /en[-_]US/i.test(v.lang)); if(v){voice=v;return;} }
+  voice=vs.find(v=>/en[-_]US/i.test(v.lang))||null;
+}
+if(synth){ pickVoice(); synth.onvoiceschanged=pickVoice; }
+function say(text){
+  if(!synth) return; synth.cancel();
+  const clean=text.replace(/[“”]/g,'').replace(/_{3,}/g,' blank ');
+  setTimeout(()=>{ const u=new SpeechSynthesisUtterance(clean); if(voice)u.voice=voice; u.lang='en-US'; u.rate=0.9; synth.speak(u); },120);
+}
+function sayQ(q){ say(q.t+'. '+q.o.map((o,i)=>'ABCD'[i]+'. '+o).join('. ')); }
+
+/* ================= RENDER ================= */
+const stage=document.getElementById('stage');
+const L='ABCD';
+
+function render(){
+  if(synth) synth.cancel();
+  const st=STEPS[S.step];
+  // progress bar
+  document.getElementById('steps').innerHTML=STEPS.map((x,i)=>`<i class="${i<S.step?'done':i===S.step?'now':''}"></i>`).join('');
+  document.getElementById('where').textContent =
+    st.k==='intro'?'Start':st.k==='learn'?`Learn · Word ${st.i+1} of ${WORDS.length}`:
+    st.k==='pintro'?'Ready to practice':st.k==='prac'?`Practice · Question ${st.i+1} of ${PRACTICE.length}`:'Results';
+
+  if(st.k==='intro') stage.innerHTML=`
+    <div class="card">
+      <h2>Welcome, Explorer! 🧭</h2>
+      <p>Scientists who study primates need special words to describe what they see. In this word kit, you will learn <b>6 words</b> from “So What Is a Primate?”</p>
+      <div class="tiles">${WORDS.map(w=>`<div class="tile"><div class="e">${w.em}</div><b>${w.w}</b></div>`).join('')}</div>
+      <p>For each word, you’ll hear what it means, see it in the article, and try a quick check. Then you’ll practice all the words. Tap <b>🔊</b> any time to hear things read aloud.</p>
+      <div class="nav"><button class="btn hear" id="h">🔊 Read to me</button><button class="btn go" id="nx">Let’s Go ➜</button></div>
+    </div>`;
+
+  if(st.k==='learn'){
+    const w=WORDS[st.i], ans=S.learn[st.i];
+    stage.innerHTML=`
+    <div class="card">
+      <div class="word"><span class="em">${w.em}</span><div><div class="w">${w.w}</div><div class="pr">${w.pr} · ${w.pos}</div></div>
+        <button class="btn hear" id="hw" style="margin-left:auto">🔊 Hear word</button></div>
+      <div class="def">Means: ${w.def}</div>
+      <div class="box art"><span class="lab">📖 In the article (paragraph ${w.para})</span>${w.art}</div>
+      <div class="box kid"><span class="lab">💡 Think of it like this</span>${w.kid}</div>
+      ${w.tip?`<div class="box tip">${w.tip}</div>`:''}
+      <div class="box root"><span class="lab">🌱 Word roots</span>${w.root}</div>
+      <button class="btn hear" id="h">🔊 Read this card to me</button>
+      ${qHTML('Quick Check', w.q, ans)}
+      <div class="nav"><button class="btn" id="bk">⬅ Back</button><button class="btn go" id="nx" ${ans===undefined?'disabled':''}>Next ➜</button></div>
+    </div>`;
+    document.getElementById('hw').onclick=()=>say(w.w);
+    bindQ(w.q, ans, v=>{S.learn[st.i]=v;});
+  }
+
+  if(st.k==='pintro') stage.innerHTML=`
+    <div class="card">
+      <h2>Word Practice 🎯</h2>
+      <p>Great work learning all 6 words! Now answer <b>${PRACTICE.length} questions</b>. Some ask you to pick the word that fits, some ask about context clues, and some ask about word roots.</p>
+      <div class="box tip">⭐ You get <b>one try</b> for each question, so read carefully. Tap 🔊 to hear any question.</div>
+      <div class="tiles">${WORDS.map(w=>`<div class="tile"><div class="e">${w.em}</div><b>${w.w}</b><span style="font-size:.85rem">${w.def}</span></div>`).join('')}</div>
+      <div class="nav"><button class="btn" id="bk">⬅ Back</button><button class="btn go" id="nx">Start Practice ➜</button></div>
+    </div>`;
+
+  if(st.k==='prac'){
+    const q=PRACTICE[st.i], ans=S.prac[st.i];
+    stage.innerHTML=`<div class="card" style="padding-top:6px">
+      ${qHTML('Question '+(st.i+1), q, ans, true)}
+      <div class="nav"><button class="btn" id="bk">⬅ Back</button><button class="btn go" id="nx" ${ans===undefined?'disabled':''}>${st.i===PRACTICE.length-1?'See My Score 🏆':'Next ➜'}</button></div>
+    </div>`;
+    bindQ(q, ans, v=>{S.prac[st.i]=v;});
+  }
+
+  if(st.k==='results'){
+    const right=PRACTICE.filter((q,i)=>S.prac[i]===q.a).length, tot=PRACTICE.length;
+    const pct=right/tot, stars=pct>=.9?3:pct>=.7?2:1;
+    const msg=stars===3?'Word Expert! You unlocked every word! 🔑':stars===2?'Great job, Explorer! Review the words below to master them.':'Good effort! Go back over the word cards and try again.';
+    const missed=PRACTICE.map((q,i)=>({q,i})).filter(x=>S.prac[x.i]!==x.q.a);
+    stage.innerHTML=`
+    <div class="card">
+      <h2 style="text-align:center">You finished! 🎉</h2>
+      <div class="stars">${'⭐'.repeat(stars)}${'☆'.repeat(3-stars)}</div>
+      <div class="score">${right} out of ${tot} correct</div>
+      <p style="text-align:center">${msg}</p>
+      ${missed.length?`<h2 style="font-size:1.4rem">Words to review</h2>`+missed.map(x=>`<div class="miss">${x.i+1}. ${x.q.t}<br>Answer: <b>${x.q.o[x.q.a]}</b><br><span style="color:var(--muted)">${x.q.ex}</span></div>`).join(''):''}
+      <div class="nav" style="margin-top:14px"><button class="btn" id="redo">↺ Try Practice Again</button><button class="btn go" id="restart">Start Whole Kit Over</button></div>
+    </div>`;
+    document.getElementById('redo').onclick=()=>{ S.prac={}; S.celebrated=false; S.step=STEPS.findIndex(x=>x.k==='pintro'); save(); render(); scrollTo(0,0); };
+    document.getElementById('restart').onclick=()=>{ S={step:0,learn:{},prac:{},celebrated:false}; save(); render(); scrollTo(0,0); };
+    if(!S.celebrated){ S.celebrated=true; save(); confetti(); }
+  }
+
+  // shared nav
+  const nx=document.getElementById('nx'), bk=document.getElementById('bk'), h=document.getElementById('h');
+  if(nx) nx.onclick=()=>{ S.step++; save(); render(); scrollTo({top:0,behavior:'smooth'}); };
+  if(bk) bk.onclick=()=>{ S.step--; save(); render(); scrollTo({top:0,behavior:'smooth'}); };
+  if(h){
+    if(st.k==='intro') h.onclick=()=>say("Welcome, Explorer! In this word kit, you will learn 6 words from So What Is a Primate. "+WORDS.map(w=>w.w).join(', ')+". For each word, you'll hear what it means, see it in the article, and try a quick check. Then you'll practice all the words.");
+    if(st.k==='learn'){ const w=WORDS[st.i]; h.onclick=()=>say(`${w.w}. ${w.pos}. ${w.w} means ${w.def}. In the article, paragraph ${w.para}: ${w.artSay} Think of it like this: ${w.kidSay} ${w.tipSay||''} ${w.rootSay}`); }
+  }
+}
+
+function qHTML(label,q,ans,big){
+  const done=ans!==undefined;
+  return `<div class="q" ${big?'style="border-top:none"':''}>
+    <div style="display:flex;align-items:center;justify-content:space-between;gap:8px"><span class="qlab">${label}</span><button class="btn hear" id="hq">🔊 Hear it</button></div>
+    <div class="qtext">${q.t}</div>
+    <div class="opts">${q.o.map((o,i)=>{
+      let c='';
+      if(done){ if(i===q.a)c='right'; else if(i===ans)c='wrong'; }
+      return `<button class="opt ${c}" data-i="${i}" ${done?'disabled':''}><span class="l">${L[i]}</span><span>${o}</span></button>`;
+    }).join('')}</div>
+    <div class="fb ${done?'show '+(ans===q.a?'good':'bad'):''}" id="fb">${done?fbText(q,ans):''}</div>
+  </div>`;
+}
+function fbText(q,ans){ return (ans===q.a?'<b>✅ Correct!</b> ':'<b>Not quite.</b> The answer is <b>'+L[q.a]+'</b>. ')+q.ex; }
+function bindQ(q,ans,store){
+  document.getElementById('hq').onclick=()=>sayQ(q);
+  if(ans!==undefined) return;
+  document.querySelectorAll('.opt').forEach(b=>b.onclick=()=>{
+    const v=+b.dataset.i; store(v); save();
+    document.querySelectorAll('.opt').forEach(o=>{ o.disabled=true; const i=+o.dataset.i; if(i===q.a)o.classList.add('right'); else if(i===v)o.classList.add('wrong'); });
+    const fb=document.getElementById('fb'); fb.className='fb show '+(v===q.a?'good':'bad'); fb.innerHTML=fbText(q,v);
+    document.getElementById('nx').disabled=false;
+    say((v===q.a?'Correct! ':'Not quite. The answer is '+L[q.a]+'. ')+q.ex);
+    fb.scrollIntoView({behavior:'smooth',block:'nearest'});
+  });
+}
+
+/* ================= CONFETTI ================= */
+function confetti(){
+  const c=document.getElementById('confetti'),x=c.getContext('2d'); c.width=innerWidth; c.height=innerHeight;
+  const cols=['#3f6b3a','#7fb35a','#ffe36b','#b98a55','#2f6db5','#e4572e','#f2a2c0'];
+  const P=Array.from({length:180},()=>({x:Math.random()*c.width,y:-20-Math.random()*c.height*.5,w:6+Math.random()*8,h:8+Math.random()*10,vx:-2+Math.random()*4,vy:2+Math.random()*4,r:Math.random()*6,vr:-.2+Math.random()*.4,col:cols[Math.random()*cols.length|0]}));
+  let t=0;(function f(){x.clearRect(0,0,c.width,c.height);P.forEach(p=>{p.x+=p.vx;p.y+=p.vy;p.vy+=.04;p.r+=p.vr;x.save();x.translate(p.x,p.y);x.rotate(p.r);x.fillStyle=p.col;x.fillRect(-p.w/2,-p.h/2,p.w,p.h);x.restore();});if(++t<260)requestAnimationFrame(f);else x.clearRect(0,0,c.width,c.height);})();
+}
+
+if(S.step<0||S.step>=STEPS.length) S.step=0;
+render();
+window.addEventListener('pagehide',()=>{ save(); if(synth) synth.cancel(); });
+</script>
+</body>
+</html>
